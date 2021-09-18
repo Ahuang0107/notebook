@@ -14,14 +14,34 @@ match (m:Member{id:3}) create (m)-[:Hours]->(:Hours{hours:40,type:"RT",date:"202
 
 ## 导入CSV
 
-```cypher
-LOAD CSV FROM "file:///person.csv"
+1.create the csv files
 
-LOAD CSV WITH HEADERS FROM 'file:///person.csv' AS line FIELDTERMINATOR ',' MERGE (:Person { id:line.id ,name: line.name, age: toInteger(line.age)})
+- nodes file like
+  ```csv
+  projectId:ID(Project), name, status, :LABEL
+  164,MN Skynetworks FY2020 AUDIT,NORMAL,Project
+  777,AUD2019-12 Baosteel Res. Intl.,DISABLED,Project
+  1841,AUD2020-12 Dongguan Meidong,DELETED,Project
+  2455,AUD2019-12 MZJH Group,NORMAL,Project
+  3435,IPO2020-08 Project Cloudsea,NORMAL,Project
+  4471,AUD2020-12 Porsche China GR,NORMAL,Project
+  ```
+- relationships file like
+  ```csv
+  :START_ID(Project),:END_ID(Member)
+  164,1
+  164,2
+  164,3
+  777,4
+  777,5
+  ```
 
-LOAD CSV WITH HEADERS FROM 'file:///resource_p_project.csv' AS line FIELDTERMINATOR ','  
-MERGE (:Project { id:line.id ,name: line.name, Age: toInteger(line.Age)})
+2.execute import bash
+
+```bash
+../bin/neo4j-admin import --database resource --nodes=Project=project.csv --nodes=Member=member.csv --nodes=Hours=hours.csv --relationships=BOOK_MEMBER=project_have_member.csv --relationships=BOOK_HOURS=member_booked_hours.csv --trim-strings=true
 ```
+you need to import csv into a new database.
 
 ### 相关链接
 
