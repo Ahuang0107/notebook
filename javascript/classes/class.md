@@ -42,3 +42,10 @@ let button = new Button("hello");
 setTimeout(button.click, 1000); // undefined
 ```
 
+## Private and protected properties and methods
+
+- Protected fields start with `_`. That’s a well-known convention, not enforced at the language level. Programmers
+  should only access a field starting with `_` from its class and classes inheriting from it.(you can use get/set make
+  protected fields access under control)
+- Private fields start with `#`. JavaScript makes sure we can only access those from inside the class.
+
