@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lottie Example</title>
+</head>
+<body>
+<canvas height=600 id=foo width=600></canvas>
+<script src="https://unpkg.com/canvaskit-wasm@0.19.0/bin/canvaskit.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+  const ckLoaded = CanvasKitInit({
+    locateFile: (file) => 'https://unpkg.com/canvaskit-wasm@0.19.0/bin/' + file
+  });
+  const jsonLoaded = fetch('https://storage.googleapis.com/skia-cdn/misc/drinks.json').then((resp) => resp.text());
+
+  Promise.all([ckLoaded, jsonLoaded]).then(([CanvasKit, jsonStr]) => {
+    SkottieExample(CanvasKit, jsonStr);
+  })
+
+  function SkottieExample(CanvasKit, jsonStr) {
+    if (!CanvasKit || !jsonStr) {
+      return;
+    }
+    const animation = CanvasKit.MakeAnimation(jsonStr);
+    const duration = animation.duration() * 1000;
+    const size = animation.size();
+    const bounds = CanvasKit.LTRBRect(0, 0, 533, 500);
+
+    const surface = CanvasKit.MakeCanvasSurface('foo');
+    if (!surface) {
+      console.log('Could not make surface');
+      return;
+    }
+
+    let firstFrame = new Date().getTime();
+
+    function drawFrame(canvas) {
+      let now = new Date().getTime();
+      let seek = ((now - firstFrame) / duration) % 1.0;
+
+      animation.seek(seek);
+      animation.render(canvas, bounds);
+
+      surface.requestAnimationFrame(drawFrame);
+    }
+
+    surface.requestAnimationFrame(drawFrame);
+  }
+</script>
+</body>
+</html>

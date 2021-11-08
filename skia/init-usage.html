@@ -5,7 +5,9 @@
   <title>Skia Canvas Kit Init Usage</title>
 </head>
 <body>
-<canvas height=300 id=foo width=300></canvas>
+<canvas height=400 id=foo width=400></canvas>
+<canvas height=400 id=foo2 width=400></canvas>
+<canvas height=400 id=foo3 width=400></canvas>
 
 <script src="https://unpkg.com/canvaskit-wasm@0.19.0/bin/canvaskit.js"
         type="text/javascript"></script>
@@ -28,6 +30,82 @@
     }
 
     surface.drawOnce(draw);
+  });
+
+
+  ckLoaded.then((CanvasKit) => {
+    const surface = CanvasKit.MakeCanvasSurface('foo2');
+
+    const paint = new CanvasKit.Paint();
+    paint.setColor(CanvasKit.Color4f(0.9, 0, 0, 1.0));
+    paint.setStyle(CanvasKit.PaintStyle.Stroke);
+    paint.setAntiAlias(true);
+    // const rr = CanvasKit.RRectXY(CanvasKit.LTRBRect(10, 60, 210, 260), 25, 15);
+    const w = 100; // size of rect
+    const h = 60;
+    let x = 10; // initial position of top left corner.
+    let y = 60;
+    let dirX = 1; // box is always moving at a constant speed in one of the four diagonal directions
+    let dirY = 1;
+
+    function drawFrame(canvas) {
+      // boundary check
+      if (x < 0 || x + w > 300) {
+        dirX *= -1; // reverse x direction when hitting side walls
+      }
+      if (y < 0 || y + h > 300) {
+        dirY *= -1; // reverse y direction when hitting top and bottom walls
+      }
+      // move
+      x += dirX;
+      y += dirY;
+
+      canvas.clear(CanvasKit.WHITE);
+      const rr = CanvasKit.RRectXY(CanvasKit.LTRBRect(x, y, x + w, y + h), 25, 15);
+      canvas.drawRRect(rr, paint);
+      surface.requestAnimationFrame(drawFrame);
+    }
+
+    surface.requestAnimationFrame(drawFrame);
+  });
+
+
+  const loadFont = fetch('https://storage.googleapis.com/skia-cdn/misc/Roboto-Regular.ttf')
+    .then((response) => response.arrayBuffer());
+
+  Promise.all([ckLoaded, loadFont]).then(([CanvasKit, robotoData]) => {
+    const surface = CanvasKit.MakeCanvasSurface('foo3');
+    const canvas = surface.getCanvas();
+    canvas.clear(CanvasKit.Color4f(0.9, 0.9, 0.9, 1.0));
+
+    const fontMgr = CanvasKit.FontMgr.FromData([robotoData]);
+    const paraStyle = new CanvasKit.ParagraphStyle({
+      textStyle: {
+        color: CanvasKit.BLACK,
+        fontFamilies: ['Roboto'],
+        fontSize: 28,
+      },
+      textAlign: CanvasKit.TextAlign.Left,
+    });
+    const text = 'Any sufficiently entrenched technology is indistinguishable from Javascript';
+    const text2 = 'Any sufficiently entrenched technology is indistinguishable from Javascript';
+    const text3 = 'Any sufficiently entrenched technology is indistinguishable from Javascript';
+    const builder = CanvasKit.ParagraphBuilder.Make(paraStyle, fontMgr);
+    builder.addText(text);
+    const boldTextStyle = CanvasKit.TextStyle({
+      color: CanvasKit.BLACK,
+      fontFamilies: ['Roboto'],
+      fontSize: 28,
+      fontStyle: {'weight': CanvasKit.FontWeight.Bold},
+    })
+    builder.pushStyle(boldTextStyle);
+    builder.addText(text2);
+    builder.pop();
+    builder.addText(text3);
+    const paragraph = builder.build();
+    paragraph.layout(290); // width in pixels to use when wrapping text
+    canvas.drawParagraph(paragraph, 10, 10);
+    surface.flush();
   });
 </script>
 </body>
