@@ -31,8 +31,8 @@
     + something是一个未被声明的变量
     + something是一个声明了但是还未初始化的变量
     + something是一个赋值为`undefined`的变量
-3. 在非全局上下文你可以将undefined用作变量名（强烈不建议这么做），因为undefined是全局上下文的属性但不是关键字 While you can use undefined as an identifier (variable
-   name) in any scope other than the global scope (because undefined is not a reserved word)
+3. 在非全局作用域下你可以将undefined用作变量名（强烈不建议这么做），因为undefined是在全局作用域下的属性但不是关键字 While you can use undefined as an identifier
+   (variable name) in any scope other than the global scope (because undefined is not a reserved word)
 
 ### number
 
