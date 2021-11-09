@@ -12,6 +12,10 @@
 
 ## questions
 
+### javascript
+
+- [ ] [typeof operator and undefined](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined#typeof_operator_and_undefined)
+
 ### react
 
 - [ ] 为什么react的回调ref写内联函数更新时会调用两次，而写成类方法则不会。
