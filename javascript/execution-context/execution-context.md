@@ -30,3 +30,11 @@ var heyhey = function doodle() {
 heyhey();// 'heyhey'
 doodle();// ReferenceError
 ```
+
+## Lexical Scope
+
+in javascript our lexical scope(available data + variables where the function was defined) determines our available
+variables. Not where the function is called(dynamic scope).
+> except for the `this` keyword.
+
+> you can use arrow function to make `this` depended on where it was defined.
