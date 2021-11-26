@@ -10,8 +10,7 @@
     - [ ] 
       Figma是用C++实现的渲染引擎，[skia](https://skia.org/docs/user/modules/canvaskit/)库，同时skia库也提供了WebAssembly接口，可以尝试也去模仿实现一个。
     - [ ] 在看到github上的figma-linux项目后，以为找到了figma的开源代码或者类似的实现，结果看了源码，只是electron对figma客户端网页的封装。
-    - [ ] 接下来还是得尝试用c++实现一个最简单的渲染引擎，然后在网页端调用。MasterGo也是使用了类似的技术路线吧，通过canvas，使用自研的C++渲染引擎。
-
+    - [ ] 接下来还是得尝试用c++实现一个最简单的渲染引擎，然后在网页端调用。MasterGo也是使用了类似的技术路线吧，通过canvas，使用自研的C++渲染引擎。找到篇博客[Bring C++ Graphics to the Web](https://www.codeproject.com/Articles/5163290/Bring-Cplusplus-Graphics-to-the-Web)
 ## questions
 
 ### javascript
