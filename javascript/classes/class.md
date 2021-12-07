@@ -49,7 +49,7 @@ setTimeout(button.click, 1000); // undefined
 Because constructor in base classes will create an empty object and assign to `this`, and derived classes except his
 parent classes to do this.
 
-> 有一个容易困惑的点，父类构造函数调用了被子类重写了的fields和methods时的行为是不同的。
+> 有一个容易困惑的点，父类构造函数调用了被子类重写了的fields和methods时的行为是不同的。具体见example01.js示例，override的属性不会影响到父类，而override的方法则会影响到父类。
 
 ## Private and protected properties and methods
 
