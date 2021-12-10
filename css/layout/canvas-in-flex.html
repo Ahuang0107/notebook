@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    html {
+      font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+      sans-serif;
+      font-size: 16px;
+      -ms-text-size-adjust: 100%;
+      -webkit-text-size-adjust: 100%;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+<div style="
+width: 100%;
+height: 100%">
+  <section style="
+  height: 100%;
+  display: flex;
+  flex-direction: column;">
+    <nav style="
+
+    background: rgb(33, 31, 31);
+    color: white;
+    flex: 0 0 32px;
+    padding: 0 12px;
+    z-index: 1000;"></nav>
+    <div style="
+    flex: 1 1 auto;
+    background: rgb(255, 21, 11);">
+      <canvas id="canvas"></canvas>
+      <!--      <div id="canvas"></div>-->
+    </div>
+  </section>
+</div>
+<script>
+  const canvasElement = document.getElementById("canvas");
+  // canvasElement.style.width = "100%";
+  // canvasElement.style.height = "100%";
+  const bounds = canvasElement.parentElement.getBoundingClientRect();
+  console.log(bounds)
+  const styles = getComputedStyle(canvasElement.parentElement);
+  w = parseInt(styles.getPropertyValue("width"), 10);
+  h = parseInt(styles.getPropertyValue("height"), 10);
+  console.log(w, h)
+  canvasElement.width = bounds.width;
+  canvasElement.height = bounds.height;
+  canvasElement.style.position = "absolute"
+</script>
+</body>
+</html>
