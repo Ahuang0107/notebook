@@ -224,8 +224,17 @@
 </div>
 <div class="editor-edit-panel">
   <div class="layout-manager-panel"></div>
-  <div class="canvas-panel"></div>
+  <div class="canvas-panel">
+    <canvas id="canvas"></canvas>
+  </div>
   <div class="property-panel"></div>
 </div>
+<script>
+  const canvasElement = document.getElementById("canvas");
+  const bounds = canvasElement.parentElement.getBoundingClientRect();
+  canvasElement.width = bounds.width;
+  canvasElement.height = bounds.height;
+  canvasElement.style.position = "absolute"
+</script>
 </body>
 </html>
