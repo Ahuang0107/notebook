@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Render Text</title>
+</head>
+<body>
+<script src="https://unpkg.com/canvaskit-wasm@0.19.0/bin/canvaskit.js"
+        type="text/javascript"></script>
+<script type="text/javascript">
+  const ckLoaded = CanvasKitInit({
+    locateFile: (file) => 'https://unpkg.com/canvaskit-wasm@0.19.0/bin/' + file
+  });
+  const loadFont = fetch('https://storage.googleapis.com/skia-cdn/misc/Roboto-Regular.ttf')
+    .then((response) => response.arrayBuffer());
+
+  Promise.all([ckLoaded, loadFont]).then(([CanvasKit, robotoData]) => {
+    const canvasEl = document.createElement("canvas")
+    canvasEl.width = 500
+    canvasEl.height = 900
+    document.body.appendChild(canvasEl);
+    const surface = CanvasKit.MakeCanvasSurface(canvasEl);
+    const canvas = surface.getCanvas();
+    canvas.clear(CanvasKit.Color4f(0.9, 0.9, 0.9, 1.0));
+    const fontMgr = CanvasKit.FontMgr.FromData([robotoData]);
+    const paraStyle = new CanvasKit.ParagraphStyle({
+      textStyle: {
+        color: CanvasKit.BLACK,
+        fontFamilies: ['Roboto'],
+        fontSize: 28,
+        fontStyle: {'weight': CanvasKit.FontWeight.Bold},
+      },
+    });
+    const text = 'apple';
+    const builder = CanvasKit.ParagraphBuilder.Make(paraStyle, fontMgr);
+    builder.addText(text);
+    builder.pop();
+    const paragraph = builder.build();
+    paragraph.layout(900); // width in pixels to use when wrapping text
+    console.log(paragraph);
+    canvas.drawParagraph(paragraph, 0, 0);
+    surface.flush();
+  })
+</script>
+</body>
+</html>
