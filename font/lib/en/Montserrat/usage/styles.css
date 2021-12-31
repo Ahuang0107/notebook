@@ -1,0 +1,16 @@
+.montserrat-font {
+  font-family: Montserrat, sans-serif;
+}
+
+.custom-font {
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-weight: 350;
+}
+
+.custom-italic-font {
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-weight: 350;
+  font-style: italic;
+}
