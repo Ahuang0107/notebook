@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Double Picture</title>
+  <style>
+    .wrap {
+    }
+
+    .img {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+    }
+
+    .img1 {
+      clip: rect(0px 250px 500px 0px);
+    }
+
+    .img2 {
+      clip: rect(0px 500px 500px 250px);
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <img class="img img1" src="dun-dun-dance.jpg" alt="1">
+  <img class="img img2" src="dun-dun-dance-motion-blur.jpg" alt="2">
+</div>
+</body>
+</html>
