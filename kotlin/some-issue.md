@@ -8,3 +8,5 @@
 2. 多线程时，新开线程的中添加的spring的`@Transactional`注解是无法影响主线程的事务的，目前采取的方法是使用`DataSourceTransactionManager`来手动管理。
 
 3. 多线程读写数据时，容易出现数据脏读脏写的情况，需要注意。
+
+4. `@Cacheable`时需要注意key如果时nullable的那么需要加上condition
