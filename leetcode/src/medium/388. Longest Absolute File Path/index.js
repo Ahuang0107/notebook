@@ -4,41 +4,40 @@
  */
 var lengthLongestPath = function (input) {
   const n = input.length;
-  let pos = 0;
+  let index = 0;
   const stack = [];
-  let ans = 0;
+  let max = 0;
 
-  while (pos < n) {
-    let depth = 1;
-    while (pos < n && input[pos] === '\t') {
-      pos++;
+  while (index < n) {
+    let depth = 0;
+    while (index < n && input[index] === '\t') {
+      index++;
       depth++;
     }
-    let isFile = false;
-    let len = 0;
-    while (pos < n && input[pos] !== '\n') {
-      if (input[pos] === '.') {
-        isFile = true;
+    let cur = 0;
+    let is_file = false;
+    while (index < n && input[index] !== '\n') {
+      index++;
+      cur++;
+      if (input[index] === '.') {
+        is_file = true;
       }
-      len++;
-      pos++;
     }
 
-    while (stack.length >= depth) {
+    while (stack.length > depth) {
       stack.pop();
     }
     if (stack.length > 0) {
-      len += stack[stack.length - 1] + 1;
+      // 这里加一是因为结果是用/分隔的，所以每次加上父目录的长度时，都要算上/的长度
+      cur += stack[stack.length - 1] + 1;
     }
-    if (isFile) {
-      ans = Math.max(ans, len);
-    } else {
-      stack.push(len);
+    if (is_file) {
+      max = Math.max(max, cur);
     }
-
-    pos++;
+    stack.push(cur);
+    index++;
   }
-  return ans;
+  return max;
 };
 
 export {
